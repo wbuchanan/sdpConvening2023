@@ -1,0 +1,237 @@
+---
+title: "Have Your Cake and Synthesize it Too"
+subtitle: Synthesis Example
+---
+
+```{r setup, include=FALSE} 
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+```
+
+# Get and Prep Example Data
+
+We'll use the `faketucky` dataset to provide an example of our "restricted" dataset.
+
+_But first a quick rant about code style_. Notice the reference to the function: 
+
+`packageName::functionName()`
+
+_This is how you should write code if you want to avoid headaches in the future_, 
+particularly when a function may exist in multiple packages.  Chasing down the 
+package that a function comes from is not always the easiest/best use of time, 
+but a few extra keystrokes upfront saves a lot of effort later.  In some 
+languages this is the only way to do things, while others allow assigning 
+aliases to packages/libraries (e.g., `import pandas as pd; pd.read_stata()`).
+That concludes my coding related rant.
+
+```{r, render=FALSE}
+# Set the pseudo-random number seed for the sake of replicability
+set.seed(7779311)
+
+# Load the library we'll use to parse the Stata formated file
+library(haven)
+
+# Load the library we'll use to do some data munging
+library(dplyr)
+
+# Storing the file location in a variable for code formatting purposes
+filenm <- "https://github.com/OpenSDP/faketucky/raw/master/faketucky.dta"
+
+# Read the dataset into memory, and return only the first 42 variables/columns
+df <- haven::read_dta(filenm, 
+	  col_select = c("sid", "first_dist_code", "first_hs_code", 
+			         "first_hs_alt", "first_hs_urbanicity", "chrt_ninth", 
+	  			     "male", "race_ethnicity", "frpl_ever_in_hs", 
+	  			     "sped_ever_in_hs", "lep_ever_in_hs", "gifted_ever_in_hs",
+	  			     "ever_alt_sch_in_hs", "scale_score_6_math", 
+	  			     "scale_score_6_read", "scale_score_8_math", 
+	  			     "scale_score_8_read", "pct_absent_in_hs", 
+	  			     "pct_excused_in_hs", "avg_gpa_hs", "scale_score_11_eng", 
+	  			     "scale_score_11_math", "scale_score_11_read",
+	  			     "scale_score_11_comp", "collegeready_ever_in_hs", 
+	  			     "careerready_ever_in_hs", "ap_ever_take_class", 
+	  			     "last_acadyr_observed", "transferout", "dropout", 
+	  			     "still_enrolled", "ontime_grad", "chrt_grad", "hs_diploma",
+	  			     "enroll_yr1_any", "enroll_yr1_2yr", "enroll_yr1_4yr",
+	  			     "enroll_yr2_any"))
+
+# Rename variables to less verbose but still clear names
+names(df) <- c("stdid", "distid", "schcd", "altsch", "urbanicity", 
+			   "cohort", "male", "race", "frleverhs", "swdeverhs", "eleverhs",
+			   "tageverhs", "alteverhs", "mthss6", "rlass6", "mthss8", 
+			   "rlass8", "pctabshs", "pctexcusedhs", "hsgpa", "acteng11", 
+			   "actmth11", "actrla11", "actcmp11", "evercollrdyhs", 
+			   "evercarrdyhs", "aptakenever", "lastobsyr", "transfer", 
+			   "dropout", "stillenrolled", "gradontime", "gradcohort", 
+			   "diploma", "yr1psenrany", "yr1psenr2yr", "yr1psenr4yr", 
+			   "yr2psenrany")
+
+# Create the unique school identifier by concatenating the dist & sch codes
+df$schid <- paste0(df$distid, df$schcd)
+
+# Get a random sample of school IDs
+validSchools <- data.frame("schid" = sample(unique(df$schid), size = 60))
+
+# Filter the data set to include only the random sample of school IDs
+df <- dplyr::inner_join(df, validSchools)
+
+# New version of R broke the usually way I would do this, but thankfully my 
+# spiffy keyboard (SO to Jason Becker Cohort 4) allows me to save time by recording
+# and playing back keystrokes so I really only had to type the variable names
+df$altsch <- as.factor(df$altsch)
+df$cohort <- as.factor(df$cohort)
+df$male <- as.factor(df$male)
+df$swdeverhs <- as.factor(df$swdeverhs)
+df$eleverhs <- as.factor(df$eleverhs)
+df$schid <- as.factor(df$schid)
+df$tageverhs <- as.factor(df$tageverhs)
+df$alteverhs <- as.factor(df$alteverhs)
+df$evercollrdyhs <- as.factor(df$evercollrdyhs)
+df$evercarrdyhs <- as.factor(df$evercarrdyhs)
+df$aptakenever <- as.factor(df$aptakenever)
+df$transfer <- as.factor(df$transfer)
+df$dropout <- as.factor(df$dropout)
+df$stillenrolled <- as.factor(df$stillenrolled)
+df$gradontime <- as.factor(df$gradontime)
+df$diploma <- as.factor(df$diploma)
+df$yr1psenrany <- as.factor(df$yr1psenrany)
+df$yr1psenr2yr <- as.factor(df$yr1psenr2yr)
+df$yr1psenr4yr <- as.factor(df$yr1psenr4yr)
+df$yr2psenrany <- as.factor(df$yr2psenrany)
+df$schid <- as.factor(df$schid)
+df$race <- as.factor(df$race)
+df$urbanicity <- as.factor(df$urbanicity)
+df$frleverhs <- as.factor(df$frleverhs)
+df$lastobsyr <- as.factor(df$lastobsyr)
+df$gradcohort <- as.factor(df$gradcohort)
+
+# Remove the school/district codes (subsumed in schid) and student IDs
+df <- df[-c(2, 3)]
+
+# Display a sample of the data
+head(df, n = 20)
+```
+
+
+# Simple Synthesis Example
+Although this likely is not what you should do in practice, I'll show the simplest 
+possible example of generating a synthetic dataset:
+
+```{r}
+# Loads the library that is used for synthetic data generation in a decent 
+# amount of the SDC literature
+library(synthpop)
+
+# Simplest synthetic example:
+cake <- synthpop::syn(df)
+
+# Show the synthpop generated object
+cake
+```
+
+## Why the example above is not generally a good idea
+`synthpop` will make a lot of assumptions about your data based on arbitrary 
+features, like the order of the variables in the data frame.  In the example,
+every variable in the data frame will be used in the synthesis process and they 
+will enter from the variable with the lowest index to the highest.  This means 
+that the underlying code base is going to start the synthesis process by 
+resampling student IDs.  We don't want that to happen though.  So, we need to 
+either do some data munging to rearrange the order of the variables in the data
+frame or we need to pass some arguments to the function's parameters to make it 
+behave the way we want it to behave.
+
+_IMPORTANT_
+If you attempt to call the `synthpop::syn()` function with the default method 
+and your session freezes or becomes unresponsive, try changing the method to `"ctree"`. 
+This is a recommendation from one of the authors of the software and worked for 
+the example below (which is why you see `method = "ctree"` in the example below).
+
+```{r}
+# Define a new order of columns in the data frame
+ord <- c("schid", "altsch", "urbanicity", "male", "race", "cohort", 
+		 "frleverhs", "swdeverhs", "eleverhs", "tageverhs", "alteverhs", 
+		 "mthss6", "rlass6", "mthss8", "rlass8", "pctabshs", "pctexcusedhs", 
+		 "aptakenever", "lastobsyr", "transfer", "dropout", "stillenrolled", 
+		 "hsgpa", "gradontime", "gradcohort", "diploma", "evercollrdyhs", 
+		 "evercarrdyhs", "actmth11", "actrla11", "acteng11", "actcmp11", 
+		 "yr1psenr2yr", "yr1psenr4yr", "yr1psenrany", "yr2psenrany")
+
+# Create the synthetic dataset object, exclude Student IDs, specify the order
+# in which the variables are synthesized, and keep the information about the 
+# models in the output object.
+cakier <- synthpop::syn(df[-c(1)], models = TRUE, method = "ctree", 
+						visit.sequence = ord)
+
+# Show the object
+cakier
+```
+# Improvements
+The model above exerts some control over the order of the variables being synthesized.
+In this example, we resampled the unique school identifiers.  Now, using only the `schid` values from the protected data, we'll *predict* the value of `altsch` 
+and use that model to _project_ values of `altsch` in our synthetic data.  
+Next, the program will use both the `schid` and `altsch` variables to *predict* 
+the `urbanicity` variable and will use that model to _project_ synthetic values 
+of `urbanicity` using the resampled `schid` and synthetic `altsch` values.  
+This continues one variable at a time until we get to the last variable in the 
+`visit.sequence`. 
+
+You can synthesize the data in any order you want, but I selected this order 
+based on the assumption that it is going to better reflect the underlying data 
+generating process (DGP).  You may have other assumptions and it may not affect 
+the end result much at all.
+
+## Things to keep in mind
+It isn't discussed on ton in the statistical data control (SDC) literature, but 
+one challenge with this approach to synthesis is error propagation. Each model 
+has it's own amount of error. That error is injected into the projections.  As 
+the process progresses further to the later variables in the data set, the error 
+from earlier projections is compounded.  
+
+```{r}
+# Now we'll add some logical constraints
+cakiest <- synthpop::syn(df[-c(1)], models = TRUE, method = "ctree",
+						 visit.sequence = ord,
+			rules = list(yr1psenrany = "yr1psenr2yr == 1 | yr1psenr4yr == 1",
+						 diploma = "dropout == 0 & stillenrolled == 0 & transfer == 0"),
+			  rvalues = list(yr1psenrany = 1, diploma = 1))
+
+# Show the object
+cakiest
+```
+# Further Improved Synthesis 
+The improved example has quite a bit more information specified. The `models` 
+parameter will save the parameters for the models fitted to the data to generate 
+the synthetic records.  However, the last three parameters:
+`visit.sequence`, `rules`, and `rvalues` are the most important for controlling 
+how the data are synthesized.  `visit.sequence` allows you to specify the order 
+in which the variables are synthesized.  This is particularly important since 
+the first variable is resampled.  
+
+## Rules and Rule Values
+Sometimes variables have logical constraints and we want the synthetic data to 
+impose similar logical constraints on the data we synthesize.  The `rules` and 
+`rvalues` parameters allow us to specify the logical constraints and values that 
+should result from the logical constraints.  In the first example, we have the 
+following logical constraint specified as a rule:
+
+`yr1psenrany = "yr1psenr2yr == 1 | yrpsenr4yr == 1"`
+
+This means that the variable `yr1psenrany` is a function of a logical constraint 
+for the `yr1psenr2yr` and `yr1psenr4yr` variables.  In otherwords, if a student 
+enrolls in the year after completing high school in a 2-year or 4-year 
+post-secondary education program, it will affect the `yr1psenrany` value.  When 
+the logical constraint is true we specify the value that the `yr1psenrany` 
+variable should take in an argument passed to the `rvalues` parameter: 
+
+`yr1psenrany = 1`
+
+So, if the synthetic student enrolls in a 2- or 4-year post-secondary 
+institution, we want the synthetic value for the `yr1psenrany` variable to be 
+equal to 1, indicating that the synthetic student enrolled in a post-secondary 
+program in the year following high school.
+
+# Longitudinal Data
+In general, I would recommend using other approaches for longitudinal data synthesis.  
+To use the approach here, you'd need to use a multivariate or *wide* data 
+structure (e.g., one variable for each measure for each period of time).  This 
+increases the error propagation and also requires additional effort to specify 
+the order of the variables to maintain the appropriate temporal relationship.
