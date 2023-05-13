@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Have Your Cake and Synthesize it Too</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -23,7 +23,7 @@
 				width: 65vw !important;
 			}
 			.reveal .controls {
-				font-size: 28px !important;
+				font-size: 10px !important;
 			}
 		</style>
 
@@ -35,20 +35,20 @@
 			</div>
 			<div class="slides">
 				<section>
-					<div style="margin-left: 12%; width: 20vw !important; margin-top: -10%;">
-						<img src="img/CEPRlogo.svg" alt="Center for Education Policy Research Logo" style="">
+					<div style="margin-left: .5%; width: 20vw !important; margin-top: -5%; margin-bottom: 1px;">
+						<img src="img/CEPRlogo.svg" alt="Center for Education Policy Research Logo" style="margin-top: 5%; margin-bottom: 1px;">
 					</div>
-					<div style="width: 55vw; margin-top: .5%; margin-left: 2.5%;">
-						<img src="img/banner.jpeg" alt="Convening standard banner for intro slide" style="width: 85%; height: 350px; margin-left: 7.5%;">
+					<div style="width: 67.5vw; margin-top: -2%; margin-left: -9%;">
+						<img src="img/banner.jpeg" alt="Convening standard banner for intro slide" style="width: 100%; height: 150px; margin-left: 7.5%; margin-bottom: 0px;">
 					</div>
-					<h1>Have Your Cake & Synthesize it Too</h1>
-					<h2><a href="https://github.com/wbuchanan">Billy Buchanan, Ph.D.</a></h2>
+					<h3>Have Your Cake & Synthesize it Too</h3>
+					<h4><a href="https://github.com/wbuchanan">Billy Buchanan, Ph.D.</a></h4>
 					<h5>Senior Research Scientist, <a href="https://www.sagcorp.com">SAG Corporation</a></h5>
-					<div style="margin-top: -.5%;">
-						<img src="img/saglogo.png" alt="SAG Corporation Logo" height="150px">
-						<img src="img/sdvosblogo.png" alt="Service Disabled Veteran Owned Small Business Emblem" height="150px">
+					<div style="margin-top: -2.5%; margin-bottom: -1.5%;">
+						<img src="img/saglogo.png" alt="SAG Corporation Logo" height="75px">
+						<img src="img/sdvosblogo.png" alt="Service Disabled Veteran Owned Small Business Emblem" height="75px">
 					</div>
-					<h3><a href="https://wbuchanan.github.io/sdpConvening2023" target="_blank">https://wbuchanan.github.io/sdpConvening2023</a></h3>
+					<h5><a href="https://wbuchanan.github.io/sdpConvening2023" target="_blank">https://wbuchanan.github.io/sdpConvening2023</a></h5>
 				</section>
 				<!--
 				Use the next slide to explain the drawing on index cards
@@ -69,9 +69,10 @@
 						<ol>
 							<li>Distinguish between user- and model-based synthesis</li>
 							<li>Gain familiarity with some current synthesis methods</li>
-							<li>Understand different applications of synthesis methods</li>
+							<li>Understand the applications of synthesis methods</li>
 						</ol>
 						<aside class="notes">
+							<p><b>Won't get to discuss model verification/testing/checking, but tools in all software mentioned/recommended.</b></p>
 							<ul>
 								<li>We'll only discuss a couple types of models that you can think of in two groups: shallow and deep learning methods</li>
 								<li>On the shallow side mention CART for general synthesis and SMOTE for small cell size imputation</li>
@@ -87,6 +88,7 @@
 					<section data-autoslide="300000">
 						<h2>What are the biggest barriers you face to share data with external stakeholders?</h2>
 						<aside class="notes">
+							<p><b>Prompt for Privacy Issues</b></p>
 							<ul>
 								<li>Remember to include prompt related to privacy related challenges/FERPA</li>
 								<li>Could also prompt about uncertainty around the analyses of external partners</li>
@@ -97,10 +99,10 @@
 					<section data-autoslide="30000">
 						<h2>How do you currently analyze data for your smallest demographic groups?</h2>
 						<aside class="notes">
+							<p><b>Prompt for small cell size and/or standard error issues</b></p>
 							<ul>
 								<li>Prompt for answers related to methods</li>
 								<li>Follow up could be how confident are you in analyses related to smaller demographic groups</li>
-								<li></li>
 							</ul>
 						</aside>
 					</section>
@@ -109,6 +111,7 @@
 					<section>
 						<h2>Synthetic Data: The Origin Stories</h2>
 						<aside class="notes">
+							<p><b>Imputation and Computer Vision in order</b></p>
 							<ul>
 								<li>Two different points of origin: imputation and computer vision</li>
 								<li>We'll talk about imputation first and comp vision second</li>
@@ -126,6 +129,7 @@
 							<li>Brought to you by the makers of Multiple Imputation: Donald Rubin</li>
 						</ul>
 						<aside class="notes">
+							<p><b>Need to balance accessibility with privacy concerns</b></p>
 							<ul>
 								<li>Problem: statistical agencies collect tons of data that can and should be used for research/analysis, but also need to protect the privacy of respondents.</li>
 								<li>Ask for a show of hands for who has heard of/used multiple or other forms of imputation?</li>
@@ -145,6 +149,7 @@
 							<li>Now in addition to images, GANs are synthesizing tabular data</li>
 						</ul>
 						<aside class="notes">
+							<p><b>Models need lots of data, but lots of data is costly/difficult</b></p>
 							<ul>
 								<li>Problem: initially computer vision researchers used simple transformations of images, but found it didn't provide enough variance.</li>
 								<li>Sourcing real images is costly and time consuming, so they started to look for ways to mimick the properties of the underlying distribution of the data.</li>
@@ -156,6 +161,7 @@
 					</section>
 					<section data-background-iframe="https://www.whichfaceisreal.com/index.php">
 						<aside class="notes">
+							<p><b>A quick game of identify the fake, will be similar to game later.</b></p>
 							<ul>
 								<li>Baked into each of these problems is a trade-off between utility and similarity, or privacy.</li>
 								<li>As the utility of the synthetic data are maximized, the similarity to the source data also increases. You'll hear about this trade off more as well.</li>
@@ -167,13 +173,6 @@
 				<section>
 					<section data-autoslide="3500">
 						<h2>What is synthetic data?</h2>
-						<aside class="notes">
-							<ul>
-								<li></li>
-								<li></li>
-								<li></li>
-							</ul>
-						</aside>
 					</section>
 					<section>
 						<ul>
@@ -183,9 +182,10 @@
 								<li>User instructions/specifications</li>
 								<li>Models fitted to observed data</li>
 							</ul>
-							<li>It is <b>not</b> synthetic control.</li>
+							<li>It is <b>not</b> synthetic control</li>
 						</ul>
 						<aside class="notes">
+							<p><b>Define and example of User Defined and Model Defined approaches.</b></p>
 							<ul>
 								<li>Call user instructions the "User Defined" approach</li>
 								<li>Can reference some of the simulation tools in OpenSDP as examples and explain that it isn't the focus of this discussion</li>
@@ -203,6 +203,7 @@
 							<li><a href="https://docs.sdv.dev/sdv/" target="_blank">Deep Learning</a></li>
 						</ul>
 						<aside class="notes">
+							<p><b>Focus on Shallow/Deep Learning, Imputation Difficult/Costly, SMOTE alternatives</b></p>
 							<ul>
 								<li>Imputation is still used to generate synthetic data, particularly the Census Bureau.  It is fairly labor intensive as it requires specifying a model for each variable that will be synthesized.  It also requires end-users to have some familiarity with analyzing multiply imputed data. Importantly, it can also include ML modeling techniques.</li>
 								<li>Shallow learning methods have become the defacto in the statistical disclosure control world.  It is similar to imputation because models are used for all variables, but requires less work because the models are determined algorithmically.  The code example I included in the GitHub repository uses this approach and highlights some stuff to consider.</li>
@@ -222,6 +223,7 @@
 							<li>Requires reshaping longitudinal data to wide format</li>
 						</ul>
 						<aside class="notes">
+							<p><b>Good for cross-sectional data, not so great for longitudinal or specific groups.</b></p>
 							<ul>
 								<li>The heading on this slide is a link to the most popular software package for this type of data synthesis</li>
 								<li>The first variable in the visit sequence is sampled from the data, so make sure the first variable is not a student identifier and or specify the visit sequence to ensure the first variable isn't going to be one that will release PII.</li>
@@ -249,6 +251,7 @@
 							<li>No observed data is sampled into the synthetic data</li>
 						</ul>
 						<aside class="notes">
+							<p><b>Can provide alternative to SMOTE and better for longitudinal, but can take a while/use a lot of resources</b></p>
 							<ul>
 								<li>The heading on this slide is a link to the software package I would recommend for this type of data synthesis</li>
 								<li>All output from these models is completely synthetic.</li>
@@ -267,6 +270,7 @@
 							<li>Validation Server</li>
 						</ul>
 						<aside class="notes">
+							<p><b>Address each bullet individually and provide recommendations.</b></p>
 							<ul>
 								<li>In short, the more utility the synthetic data retains, the lower the privacy protection.  To see why, if you maximized the utility of data synthesized from a source it would reproduce the original source. Additionally, both synthpop and the synthetic data vault include tools to assess the utility of your synthetic data and have varying capabilities for addressing privacy metrics.</li>
 								<li>For cross-sectional data synthesis, I would definitely recommend using the shallow learning approach since it is highly computationally efficient and does a good job.  If you are trying to improve a predictive model that isn't working so well for small demographic groups, you could use SMOTE or CTGAN to generate synthetic records for those groups which should improve the predictive accuracy.  For longitudinal data I would recommend using CPAR when possible.  It will synthesize unbalanced panels and balanced panels, while accomplishing the same with other approaches is significantly more challenging and time consuming.</li>
@@ -311,6 +315,7 @@
 							</tbody>
 						</table>
 						<aside class="notes">
+							<p><b>If synthesis is allow with more restricted data, it shouldn't be a problem for less restricted data.</b></p>
 							<ul>
 								<li>In addition to these, there have also been some experiments in the education sector as well.</li>
 								<li>The importance of Census and IRS, however, is that unlike FERPA, the laws governing privacy in the Census - Title 13 of the US Code - and IRS - Title 26 of the US Code - have criminal and financial penalties associated with disclosure. If synthesis is good enough for these agencies to satisfy the higher standards of privacy protections they implement, it is good enough to satisfy the requirements of FERPA.</li>
@@ -326,6 +331,7 @@
 					<section>
 						<h2>Want to play a game?</h2>
 						<aside class="notes">
+							<p><b>There are instructions on your tables and we'll walk through things too.</b></p>
 							<ul>
 								<li>To help you understand how the deep learning methods work, I've come up with a game where your tables/groups will become your own living AI.</li>
 								<li>Things will move a little fast in the game, but that's because humans are way better at one-shot learning compared to machines.</li>
@@ -341,6 +347,7 @@
 							<li>Telephone phase</li>
 						</ol>
 						<aside class="notes">
+							<p><b>Explain how the game works</b></p>
 							<ul>
 								<li>In the draw phase, the critic needs to keep their eyes closed.  The rest of the group will take turns contributing to drawing a synthetic example of the image from your prompt.</li>
 								<li>Each "artist" will only have a short amount of time to draw before passing things on to the next artist.</li>
@@ -352,28 +359,52 @@
 						</aside>
 					</section>
 					<section>
-						<h3>How GANs work</h3>
-						<ul>
-							<li>Two neural nets: a Generator and a Discriminator</li>
-							<li>Samples are synthesized by the generator</li>
-							<li>The discriminator evaluates which samples are real/fake</li>
-							<li>The goal of the discriminator is to get better at identifying synthetic data</li>
-							<li>The goal of the generator is to produce synthetic data that appears real</li>
-						</ul>
+						<h3 style="">How GANs work</h3>
+						<img src="img/dlProcess.svg" style="margin-top: -2.5%; width: 50vw; height: 25vw;" alt="Image showing process of data flow for Generative Adversarial Networks">
 						<aside class="notes">
+							<p><b>Explain how the architecture works while walking through the diagram</b></p>
 							<ul>
+								<li>Two neural nets: a Generator and a Discriminator</li>
+								<li>Samples are synthesized by the generator</li>
+								<li>The discriminator evaluates which samples are real/fake</li>
+								<li>The goal of the discriminator is to get better at identifying synthetic data</li>
+								<li>The goal of the generator is to produce synthetic data that appears real</li>
 								<li>Each layer of the discriminator contributes a bit to the synthesis of the data.  The final layer of the generator produces a sample with the same structure as the real data, but the properties are going to be bad at first.</li>
 								<li>The discriminator is basically a logistic regression model that is trying to correctly predict whether the samples are real/synthetic.  The Goal is for the generator to create samples that are indistinguishable from real data, while the discriminator is trying to get better and better at identifying the synthetic samples.</li>
 								<li>After the discriminator does it's work, the error from the model is pushed back through the layers in reverse order to improve the quality of the synthetic samples.</li>
 							</ul>
 						</aside>
 					</section>
+				</section>
+				<section>
+					<section data-autoslide="3500">
+						<h1>Code Examples</h1>
+					</section>
+					<section data-autoslide="3500">
+						<h1>CART-Based Synthesis</h1>
+					</section>
 					<section>
-						<img src="img/dlProcess.svg" style="width: 50vw; height: 25vw;" alt="Image showing process of data flow for Generative Adversarial Networks">
+						<iframe src="mlSynthesisExample.html" style="width: 100vw; height: 500px;"></iframe>
 						<aside class="notes">
-							<ul>
-								<li>Walk the audience through the architecture</li>
-							</ul>
+							<p><b>Walk through the code</b></p>
+						</aside>
+					</section>
+					<section data-autoslide="3500">
+						<h1>CTGAN-Based Synthesis</h1>
+					</section>
+					<section>
+						<iframe src="ctganSynthesisExample.html" style="width: 75%; height: 500px;"></iframe>
+						<aside class="notes">
+							<p><b>Walk through the code</b></p>
+						</aside>
+					</section>
+					<section data-autoslide="3500">
+						<h1>CPAR-Based Synthesis</h1>
+					</section>
+					<section>
+						<iframe src="cparSynthesisExample.html" style="width: 75%; height: 500px;"></iframe>
+						<aside class="notes">
+							<p><b>Walk through the code</b></p>
 						</aside>
 					</section>
 				</section>
@@ -384,6 +415,10 @@
 				<section>
 					<h1 style="color: #A51C30;">Thank You</h1><br>
 					<h2><a href="mailto:wbuchanan@sagcorp.com?subject=Follow up From SDP 2023 Convening" style="color: black;">wbuchanan@sagcorp.com</a></h2>
+					<p>Slides &amp; Materials Available at: <br><a href="https://github.com/wbuchanan/sdpConvening2023" target="_blank">github.com/wbuchanan/sdpConvening2023</a></p>
+					<aside class="notes">
+						<p><b>Speaker notes available by pressing the s key when you view the slide deck</b></p>
+					</aside>
 				</section>
 				<section data-background-size="cover" data-background-image="https://sdp.cepr.harvard.edu/sites/hwpi.harvard.edu/files/styles/os_files_xxlarge/public/sdp/files/databuttons.jpg?m=1518027009&itok=onS4brki" data-background-size="100%">
 					<h1 style="color: white; -webkit-text-stroke: 1px black;">Thank You</h1>
